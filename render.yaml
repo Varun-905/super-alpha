@@ -7,6 +7,6 @@ services:
     startCommand: python app.py
     envVars:
       - key: GEMINI_API_KEY
-        value: your_gemini_api_key_here
+        value: "AIzaSyBRotbHWozOM-ER999UOa_iF36TnvMDZyM"
       - key: OPENROUTER_API_KEY
-        value: your_openrouter_api_key_here
+        value: "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"
