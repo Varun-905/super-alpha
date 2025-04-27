@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alpha - Your Cute Assistant</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        #chatbox { width: 60%; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
+        #messages { height: 300px; overflow-y: scroll; text-align: left; margin-bottom: 20px; }
+        #user_input { width: 80%; padding: 10px; }
+        button { padding: 10px 20px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h1>🐣 Welcome to Alpha Assistant!</h1>
+    <div id="chatbox">
+        <div id="messages"></div>
+        <input type="text" id="user_input" placeholder="Say something..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            let user_input = document.getElementById('user_input').value;
+            if (!user_input) return;
+            
+            document.getElementById('messages').innerHTML += '<div><b>You:</b> ' + user_input + '</div>';
+            document.getElementById('user_input').value = '';
+
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({message: user_input})
+            });
+            const data = await response.json();
+            
+            document.getElementById('messages').innerHTML += '<div><b>Alpha:</b> ' + data.response + '</div>';
+
+            const audio = new Audio('data:audio/mp3;base64,' + data.audio);
+            audio.play();
+        }
+    </script>
+</body>
+</html>
